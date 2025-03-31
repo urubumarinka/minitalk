@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maborges <maborges@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 11:46:27 by maborges          #+#    #+#             */
-/*   Updated: 2025/03/26 14:31:03 by maborges         ###   ########.fr       */
+/*   Created: 2025/03/25 12:17:33 by maborges          #+#    #+#             */
+/*   Updated: 2025/03/26 18:17:55 by maborges         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#ifndef MINITALK_H
+# define MINITALK_H
 
-int	main(void)
-{
-	pid_t	pid;
+# include <signal.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <sys/types.h>
+//# include "libft.h"
+//# include "ft_printf.h"
 
-	pid = getpid();
-	printf("Server PID: %d\n", pid);
-	struct sigaction	act;
+void	ft_sender(char c, pid_t pid);
 
-	while(1)
-	{
-		usleep(500);
-	}
-	//if signal is SIGUSR1, print 0
-	//if signal is SIGUSR2, print 1
-	//if signal is SIGUSR1 and SIGUSR2, print newline
 
-	//get message from client
-	//decode message received from binary to string
-	//print message
-	return (0);
-}
+#endif

@@ -1,35 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maborges <maborges@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 11:46:27 by maborges          #+#    #+#             */
-/*   Updated: 2025/03/26 14:31:03 by maborges         ###   ########.fr       */
+/*   Created: 2024/11/15 20:54:00 by maborges          #+#    #+#             */
+/*   Updated: 2024/11/16 14:31:24 by maborges         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-int	main(void)
+int	ft_toupper(int c)
 {
-	pid_t	pid;
-
-	pid = getpid();
-	printf("Server PID: %d\n", pid);
-	struct sigaction	act;
-
-	while(1)
-	{
-		usleep(500);
-	}
-	//if signal is SIGUSR1, print 0
-	//if signal is SIGUSR2, print 1
-	//if signal is SIGUSR1 and SIGUSR2, print newline
-
-	//get message from client
-	//decode message received from binary to string
-	//print message
-	return (0);
+	if ((c >= 'a' && c <= 'z'))
+		return (c - 32);
+	else
+		return (c);
 }

@@ -1,35 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maborges <maborges@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 11:46:27 by maborges          #+#    #+#             */
-/*   Updated: 2025/03/26 14:31:03 by maborges         ###   ########.fr       */
+/*   Created: 2024/11/22 17:23:46 by maborges          #+#    #+#             */
+/*   Updated: 2024/11/25 12:59:42 by maborges         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-int	main(void)
+/* static void	ft_test(unsigned int i, char *str)
 {
-	pid_t	pid;
+	*str = ft_toupper(*str);
+} */
 
-	pid = getpid();
-	printf("Server PID: %d\n", pid);
-	struct sigaction	act;
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
+{
+	int	i;
+	int	j;
 
-	while(1)
+	if (!s || !f)
+		return ;
+	i = 0;
+	j = ft_strlen(s);
+	while (i < j)
 	{
-		usleep(500);
+		(*f)(i, &s[i]);
+		i++;
 	}
-	//if signal is SIGUSR1, print 0
-	//if signal is SIGUSR2, print 1
-	//if signal is SIGUSR1 and SIGUSR2, print newline
-
-	//get message from client
-	//decode message received from binary to string
-	//print message
-	return (0);
 }
+
+/* int	main(void)
+{
+	char	str[] = "Oi gente linda!";
+
+	ft_striteri(str, ft_test);
+	printf("%s", str);
+} */

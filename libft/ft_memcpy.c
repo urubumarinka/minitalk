@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maborges <maborges@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 11:46:27 by maborges          #+#    #+#             */
-/*   Updated: 2025/03/26 14:31:03 by maborges         ###   ########.fr       */
+/*   Created: 2024/11/13 19:15:32 by maborges          #+#    #+#             */
+/*   Updated: 2024/11/28 17:58:16 by maborges         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-int	main(void)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	pid_t	pid;
+	char		*strdest;
+	const char	*strsrc;
+	size_t		i;
 
-	pid = getpid();
-	printf("Server PID: %d\n", pid);
-	struct sigaction	act;
-
-	while(1)
+	if (!dest && !src)
+		return (dest);
+	strdest = (char *)dest;
+	strsrc = (const char *)src;
+	i = 0;
+	while (i < n)
 	{
-		usleep(500);
+		strdest[i] = strsrc[i];
+		i++;
 	}
-	//if signal is SIGUSR1, print 0
-	//if signal is SIGUSR2, print 1
-	//if signal is SIGUSR1 and SIGUSR2, print newline
-
-	//get message from client
-	//decode message received from binary to string
-	//print message
-	return (0);
+	return (strdest);
 }

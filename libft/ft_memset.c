@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maborges <maborges@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 11:46:27 by maborges          #+#    #+#             */
-/*   Updated: 2025/03/26 14:31:03 by maborges         ###   ########.fr       */
+/*   Created: 2024/11/12 20:48:05 by maborges          #+#    #+#             */
+/*   Updated: 2024/11/28 18:28:04 by maborges         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-int	main(void)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	pid_t	pid;
+	unsigned char	*str;
 
-	pid = getpid();
-	printf("Server PID: %d\n", pid);
-	struct sigaction	act;
-
-	while(1)
+	str = (unsigned char *)s;
+	while (n > 0)
 	{
-		usleep(500);
+		str[n - 1] = (unsigned char)c;
+		n--;
 	}
-	//if signal is SIGUSR1, print 0
-	//if signal is SIGUSR2, print 1
-	//if signal is SIGUSR1 and SIGUSR2, print newline
-
-	//get message from client
-	//decode message received from binary to string
-	//print message
-	return (0);
+	return ((void *)s);
 }

@@ -1,35 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maborges <maborges@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 11:46:27 by maborges          #+#    #+#             */
-/*   Updated: 2025/03/26 14:31:03 by maborges         ###   ########.fr       */
+/*   Created: 2024/11/14 12:25:13 by maborges          #+#    #+#             */
+/*   Updated: 2024/11/28 18:00:35 by maborges         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-int	main(void)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	pid_t	pid;
+	char		*tmpdest;
+	const char	*tmpsrc;
+	size_t		i;
 
-	pid = getpid();
-	printf("Server PID: %d\n", pid);
-	struct sigaction	act;
-
-	while(1)
+	if (!dest && !src)
+		return (dest);
+	tmpdest = (char *)dest;
+	tmpsrc = (const char *)src;
+	i = 0;
+	if (tmpdest > tmpsrc)
 	{
-		usleep(500);
+		while (n-- > 0)
+			tmpdest[n] = tmpsrc[n];
 	}
-	//if signal is SIGUSR1, print 0
-	//if signal is SIGUSR2, print 1
-	//if signal is SIGUSR1 and SIGUSR2, print newline
-
-	//get message from client
-	//decode message received from binary to string
-	//print message
-	return (0);
+	else
+	{
+		while (i < n)
+		{
+			tmpdest[i] = tmpsrc[i];
+			i++;
+		}
+	}
+	return (dest);
 }

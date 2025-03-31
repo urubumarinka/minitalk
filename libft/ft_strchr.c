@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maborges <maborges@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 11:46:27 by maborges          #+#    #+#             */
-/*   Updated: 2025/03/26 14:31:03 by maborges         ###   ########.fr       */
+/*   Created: 2024/11/16 14:40:12 by maborges          #+#    #+#             */
+/*   Updated: 2024/11/19 17:40:46 by maborges         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-int	main(void)
+char	*ft_strchr(const char *s, int c)
 {
-	pid_t	pid;
+	int	i;
 
-	pid = getpid();
-	printf("Server PID: %d\n", pid);
-	struct sigaction	act;
-
-	while(1)
+	i = 0;
+	while (s[i] != '\0')
 	{
-		usleep(500);
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
+		i++;
 	}
-	//if signal is SIGUSR1, print 0
-	//if signal is SIGUSR2, print 1
-	//if signal is SIGUSR1 and SIGUSR2, print newline
-
-	//get message from client
-	//decode message received from binary to string
-	//print message
-	return (0);
+	if ((char)c == '\0')
+		return ((char *)&s[i]);
+	return (NULL);
 }
