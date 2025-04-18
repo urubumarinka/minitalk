@@ -1,31 +1,27 @@
 
 # My program name and libft var
 NAME = minitalk
-SERVER = server.c
-CLIENT = client.c
-# Path to the libft directory
-LIBFT_DIR = libft
+SERVER = server
+CLIENT = client
+
+# Path to the libft
 LIBFT = $(LIBFT_DIR)/libft.a
+LIBFT_DIR = ./libft
 
 # Compiler and flags
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iinc -Isrc -g
 
 # Source files
-SRCS =	src/ft_printf.c \
-		src/ft_putnbr.c \
-		src/ft_putnbr_unsigned.c \
-		src/ft_putstr.c \
-		src/ft_putadress.c \
-		src/ft_puthex.c \
-		src/ft_putchar.c \
-		src/ft_puthex_min.c
+SRCS_SERVER = server.c
+SRCS_CLIENT = client.c
 
 # Object files (with paths accounted for)
-OBJS = $(SRCS:%.c=%.o)
+OBJS_SERVER = $(SRCS_SERVER:%.c=%.o)
+OBJS_CLIENT = $(SRCS_CLIENT:%.c=%.o)
 
 # Default rule to compile the program
-all: $(LIBFT) $(NAME)
+all: $(LIBFT) $(SERVER) $(CLIENT)
 
 # Build libft
 $(LIBFT):
@@ -36,28 +32,30 @@ $(NAME): $(OBJS)
 	cp $(LIBFT) $(NAME)
 	ar rcs $(NAME) $(OBJS)
 
-# Rule to compile the source files into object files
-# Fix for object paths
+# Compile server
+$(SERVER): $(OBJS_SERVER) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS_SERVER) -L$(LIBFT_DIR) -lft -o $(SERVER)
+
+# Compile client
+$(CLIENT): $(OBJS_CLIENT) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS_CLIENT) -L$(LIBFT_DIR) -lft -o $(CLIENT)
+
+# Rule to compile .c files into .o
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# For make main (ensure main.c is in the same directory)
-main: $(NAME) main.c
-	$(CC) $(CFLAGS) main.c $(NAME) -o main
-
-# Clean rule to remove object files
+# Clean
 clean:
 	$(MAKE) clean -C $(LIBFT_DIR)
-	rm -f $(OBJS)
+	rm -f $(OBJS_SERVER) $(OBJS_CLIENT)
 
-# Fclean rule to remove object files and executable
+# Full clean
 fclean: clean
 	$(MAKE) fclean -C $(LIBFT_DIR)
-	rm -f $(NAME) main
+	rm -f $(SERVER) $(CLIENT)
 
-# Rule to clean and recompile everything
+# Rebuild everything
 re: fclean all
 
-# Phony targets to prevent conflicts with files
+# Phony targets
 .PHONY: all clean fclean re
-
