@@ -6,7 +6,7 @@
 /*   By: maborges <maborges@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:16:52 by maborges          #+#    #+#             */
-/*   Updated: 2025/04/18 11:59:55 by maborges         ###   ########.fr       */
+/*   Updated: 2025/04/18 17:24:30 by maborges         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,22 @@ void	signal_handler(int sig)
 {
 	if (sig == SIGUSR1)
 		g_reply = 1;
-	else if (sig == SIGUSR2)
-		g_reply = 0;
 }
 
 void	message_to_binary_sender(char *msg, pid_t pid)
 {
-	int	n;
+	int	c;
 	int	i;
-	int	b;
+	int	bit;
 
-	i = 0;
-	b = 0;
-	while (msg[i] != "\0")
+	i = -1;
+	while (msg[++i] != '\0')
 	{
-		msg[i] = n;
-		while (b++ < 8)
+		c = msg[i];
+		bit = -1;
+		while (++bit < 8)
 		{
-			n = (n >> (7 - b)) & 1;
-			if (n == 0)
+			if (((c >> (7 - bit)) & 1) == 0)
 				kill(pid, SIGUSR1);
 			else
 				kill(pid, SIGUSR2);
@@ -46,19 +43,17 @@ void	message_to_binary_sender(char *msg, pid_t pid)
 			g_reply = 0;
 		}
 	}
-	if (msg[i] == "\0")
-	{
-		b = 0;
-		while (b++ < 8)
-			kill(pid, SIGUSR1);
-	}
+	bit = 0;
+	bit = 0;
+	while (bit++ < 8)
+		kill(pid, SIGUSR1);
 }
 
 int	main(int ac, char **ag)
 {
-	const char	*msg;
-	int			i;
-	int			pid;
+	char				*msg;
+	int					pid;
+	struct sigaction	sa;
 
 	if (ac != 3)
 	{
@@ -72,7 +67,10 @@ int	main(int ac, char **ag)
 		return (1);
 	}
 	msg = ag[2];
-	signal(SIGUSR1, signal_handler);
+	sa.sa_handler = signal_handler;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGUSR1, &sa, NULL);
 	message_to_binary_sender(msg, pid);
 	return (0);
 }
