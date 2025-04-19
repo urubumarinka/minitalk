@@ -6,7 +6,7 @@
 /*   By: maborges <maborges@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:16:52 by maborges          #+#    #+#             */
-/*   Updated: 2025/04/19 19:42:26 by maborges         ###   ########.fr       */
+/*   Updated: 2025/04/19 20:34:05 by maborges         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,24 @@ void	signal_handler(int sig)
 		g_reply = 1;
 }
 
+void	send_char(char c, pid_t pid)
+{
+	int	bit;
+
+	bit = -1;
+	while (++bit < 8)
+	{
+		if (((c >> (7 - bit)) & 1) == 0)
+			kill(pid, SIGUSR1);
+		else
+			kill(pid, SIGUSR2);
+		usleep(100);
+		while (g_reply == 0)
+			pause();
+		g_reply = 0;
+	}
+}
+
 void	message_to_binary_sender(char *msg, pid_t pid)
 {
 	int	c;
@@ -30,19 +48,9 @@ void	message_to_binary_sender(char *msg, pid_t pid)
 	while (msg[++i] != '\0')
 	{
 		c = msg[i];
-		bit = -1;
-		while (++bit < 8)
-		{
-			if (((c >> (7 - bit)) & 1) == 0)
-				kill(pid, SIGUSR1);
-			else
-				kill(pid, SIGUSR2);
-			usleep(100);
-			while (g_reply == 0)
-				pause();
-			g_reply = 0;
-		}
+		send_char(c, pid);
 	}
+	c = 0;
 	bit = 0;
 	while (bit++ < 8)
 	{
