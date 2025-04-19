@@ -6,7 +6,7 @@
 /*   By: maborges <maborges@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:17:33 by maborges          #+#    #+#             */
-/*   Updated: 2025/04/18 16:13:50 by maborges         ###   ########.fr       */
+/*   Updated: 2025/04/19 19:43:41 by maborges         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define _XOPEN_SOURCE 500
 
 # include <signal.h>
-# include <stdio.h>
+//# include <stdio.h>
 # include <unistd.h>
 //# include <stdlib.h>
 # include <sys/types.h>

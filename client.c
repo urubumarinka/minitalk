@@ -6,7 +6,7 @@
 /*   By: maborges <maborges@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:16:52 by maborges          #+#    #+#             */
-/*   Updated: 2025/04/18 17:24:30 by maborges         ###   ########.fr       */
+/*   Updated: 2025/04/19 19:42:26 by maborges         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,14 @@ void	message_to_binary_sender(char *msg, pid_t pid)
 		}
 	}
 	bit = 0;
-	bit = 0;
 	while (bit++ < 8)
+	{
 		kill(pid, SIGUSR1);
+		usleep(100);
+		while (g_reply == 0)
+			pause();
+		g_reply = 0;
+	}
 }
 
 int	main(int ac, char **ag)
